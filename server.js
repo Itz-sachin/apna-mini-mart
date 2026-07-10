@@ -24,6 +24,15 @@ if (!fs.existsSync(ORDERS_FILE)) {
 }
 
 app.use(express.json());
+
+// The service worker file itself must never be cached by the browser's HTTP
+// cache, or the browser won't notice new deploys and will stay stuck on the
+// old app version indefinitely.
+app.get('/service-worker.js', (req, res) => {
+  res.set('Cache-Control', 'no-cache');
+  res.sendFile(path.join(__dirname, 'public', 'service-worker.js'));
+});
+
 app.use(express.static(path.join(__dirname, 'public'), {
   // Let the service worker control caching for most assets; keep server
   // caching light so admin edits show up quickly.

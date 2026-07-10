@@ -1,21 +1,25 @@
 // service-worker.js - Apna Mini Mart PWA
 // Strategy:
-//   - App shell (html/css/js/icons/images): cache-first (fast on slow networks)
+//   - App code (html/css/js): network-first, falling back to cache when offline
+//     (so the app never shows a stale version when online, but still works offline)
+//   - Icons/images: cache-first (rarely change, safe to cache aggressively)
 //   - /api/products: network-first, falling back to cache when offline
-//     (so the catalog stays fresh when online but still works offline)
 
-const CACHE_VERSION = 'apna-mart-v1';
+const CACHE_VERSION = 'apna-mart-v2';
 const SHELL_CACHE = `${CACHE_VERSION}-shell`;
 const DATA_CACHE = `${CACHE_VERSION}-data`;
 
-const SHELL_ASSETS = [
+const CODE_ASSETS = [
   '/',
   '/index.html',
   '/admin.html',
   '/manifest.json',
   '/css/style.css',
   '/js/app.js',
-  '/js/admin.js',
+  '/js/admin.js'
+];
+
+const IMAGE_ASSETS = [
   '/icons/icon-72.png',
   '/icons/icon-96.png',
   '/icons/icon-128.png',
@@ -37,7 +41,7 @@ const SHELL_ASSETS = [
 
 self.addEventListener('install', (event) => {
   event.waitUntil(
-    caches.open(SHELL_CACHE).then((cache) => cache.addAll(SHELL_ASSETS))
+    caches.open(SHELL_CACHE).then((cache) => cache.addAll([...CODE_ASSETS, ...IMAGE_ASSETS]))
   );
   self.skipWaiting();
 });
@@ -86,17 +90,32 @@ self.addEventListener('fetch', (event) => {
     return;
   }
 
-  // App shell + images: cache-first, network fallback, then cache the response
-  event.respondWith(
-    caches.match(request).then((cached) => {
-      if (cached) return cached;
-      return fetch(request)
-        .then((response) => {
+  const isImage = IMAGE_ASSETS.some((path) => url.pathname === path) || url.pathname.startsWith('/images/') || url.pathname.startsWith('/icons/');
+
+  if (isImage) {
+    // Images/icons: cache-first, network fallback
+    event.respondWith(
+      caches.match(request).then((cached) => {
+        if (cached) return cached;
+        return fetch(request).then((response) => {
           const clone = response.clone();
           caches.open(SHELL_CACHE).then((cache) => cache.put(request, clone));
           return response;
-        })
-        .catch(() => caches.match('/index.html'));
-    })
+        });
+      })
+    );
+    return;
+  }
+
+  // App code (html/css/js): network-first so updates show up immediately,
+  // falling back to cache only when offline.
+  event.respondWith(
+    fetch(request)
+      .then((response) => {
+        const clone = response.clone();
+        caches.open(SHELL_CACHE).then((cache) => cache.put(request, clone));
+        return response;
+      })
+      .catch(() => caches.match(request).then((cached) => cached || caches.match('/index.html')))
   );
 });
