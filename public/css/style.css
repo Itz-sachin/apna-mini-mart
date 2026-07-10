@@ -212,10 +212,10 @@ button { font-family: inherit; cursor: pointer; }
   text-decoration: none;
 }
 .upi-badge {
-  background: linear-gradient(135deg, #ED752E 50%, #097939 50%);
-  color: white; font-weight: 800; font-size: 12px; letter-spacing: 0.5px;
-  padding: 5px 9px; border-radius: 6px; flex-shrink: 0;
+  background: white; border-radius: 6px; padding: 4px 8px;
+  display: flex; align-items: center; flex-shrink: 0;
 }
+.upi-badge img { height: 16px; width: auto; display: block; }
 
 .screenshot-confirm {
   display: flex; align-items: flex-start; gap: 8px; margin: 14px 0;
