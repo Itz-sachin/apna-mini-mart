@@ -1,7 +1,7 @@
 [
   {
     "id": "p001",
-    "name": "Toor Dal",
+    "name": "Tata Sampann Toor Dal",
     "category": "Grocery",
     "price": 145,
     "unit": "1 kg",
@@ -16,7 +16,7 @@
   },
   {
     "id": "p002",
-    "name": "Basmati Rice",
+    "name": "India Gate Basmati Rice",
     "category": "Grocery",
     "price": 90,
     "unit": "1 kg",
@@ -30,7 +30,7 @@
   },
   {
     "id": "p003",
-    "name": "Wheat Atta",
+    "name": "Aashirvaad Select Atta",
     "category": "Grocery",
     "price": 55,
     "unit": "1 kg",
@@ -45,7 +45,7 @@
   },
   {
     "id": "p004",
-    "name": "Sunflower Oil",
+    "name": "Fortune Sunflower Oil",
     "category": "Grocery",
     "price": 130,
     "unit": "1 L",
@@ -59,7 +59,7 @@
   },
   {
     "id": "p005",
-    "name": "Sugar",
+    "name": "Madhur Pure Sugar",
     "category": "Grocery",
     "price": 45,
     "unit": "1 kg",
@@ -71,8 +71,35 @@
     "description": "Fine crystal white sugar."
   },
   {
+    "id": "p006",
+    "name": "Tata Salt",
+    "category": "Grocery",
+    "price": 28,
+    "unit": "1 kg",
+    "image": "images/grocery.png",
+    "variants": [
+      "1 kg"
+    ],
+    "stock": "in_stock",
+    "description": "Iodized free-flow salt."
+  },
+  {
+    "id": "p007",
+    "name": "Maggi 2-Minute Noodles",
+    "category": "Grocery",
+    "price": 14,
+    "unit": "1 pack",
+    "image": "images/grocery.png",
+    "variants": [
+      "1 pack",
+      "Family pack (4)"
+    ],
+    "stock": "in_stock",
+    "description": "Masala instant noodles."
+  },
+  {
     "id": "p101",
-    "name": "Toned Milk",
+    "name": "Amul Taaza Toned Milk",
     "category": "Dairy",
     "price": 28,
     "unit": "500 ml",
@@ -86,7 +113,7 @@
   },
   {
     "id": "p102",
-    "name": "Curd",
+    "name": "Amul Curd",
     "category": "Dairy",
     "price": 35,
     "unit": "400 g",
@@ -100,7 +127,7 @@
   },
   {
     "id": "p103",
-    "name": "Paneer",
+    "name": "Amul Paneer",
     "category": "Dairy",
     "price": 90,
     "unit": "200 g",
@@ -114,7 +141,7 @@
   },
   {
     "id": "p104",
-    "name": "Butter",
+    "name": "Amul Butter",
     "category": "Dairy",
     "price": 55,
     "unit": "100 g",
@@ -127,8 +154,21 @@
     "description": "Creamy table butter."
   },
   {
+    "id": "p105",
+    "name": "Mother Dairy Ice Cream Cup",
+    "category": "Dairy",
+    "price": 25,
+    "unit": "1 cup",
+    "image": "images/dairy.png",
+    "variants": [
+      "1 cup"
+    ],
+    "stock": "in_stock",
+    "description": "Vanilla ice cream cup."
+  },
+  {
     "id": "p201",
-    "name": "Namkeen Mix",
+    "name": "Haldiram's Namkeen Mix",
     "category": "Snacks",
     "price": 40,
     "unit": "200 g",
@@ -142,7 +182,7 @@
   },
   {
     "id": "p202",
-    "name": "Potato Chips",
+    "name": "Lay's Potato Chips",
     "category": "Snacks",
     "price": 20,
     "unit": "52 g",
@@ -157,7 +197,7 @@
   },
   {
     "id": "p203",
-    "name": "Glucose Biscuits",
+    "name": "Parle-G Glucose Biscuits",
     "category": "Snacks",
     "price": 10,
     "unit": "1 pack",
@@ -171,7 +211,7 @@
   },
   {
     "id": "p204",
-    "name": "Cream Biscuits",
+    "name": "Britannia Bourbon Cream Biscuits",
     "category": "Snacks",
     "price": 25,
     "unit": "1 pack",
@@ -183,8 +223,35 @@
     "description": "Chocolate cream biscuits."
   },
   {
+    "id": "p205",
+    "name": "Kurkure Masala Munch",
+    "category": "Snacks",
+    "price": 20,
+    "unit": "55 g",
+    "image": "images/snacks.png",
+    "variants": [
+      "35 g",
+      "55 g"
+    ],
+    "stock": "in_stock",
+    "description": "Crunchy masala corn snack."
+  },
+  {
+    "id": "p206",
+    "name": "Oreo Chocolate Biscuits",
+    "category": "Snacks",
+    "price": 30,
+    "unit": "1 pack",
+    "image": "images/snacks.png",
+    "variants": [
+      "1 pack"
+    ],
+    "stock": "in_stock",
+    "description": "Chocolate sandwich cream biscuits."
+  },
+  {
     "id": "p301",
-    "name": "Cola Soft Drink",
+    "name": "Coca-Cola",
     "category": "Beverages",
     "price": 40,
     "unit": "750 ml",
@@ -199,7 +266,7 @@
   },
   {
     "id": "p302",
-    "name": "Packaged Drinking Water",
+    "name": "Bisleri Packaged Drinking Water",
     "category": "Beverages",
     "price": 20,
     "unit": "1 L",
@@ -214,7 +281,7 @@
   },
   {
     "id": "p303",
-    "name": "Mango Juice",
+    "name": "Frooti Mango Juice",
     "category": "Beverages",
     "price": 30,
     "unit": "200 ml",
@@ -227,8 +294,21 @@
     "description": "Refreshing mango fruit drink."
   },
   {
+    "id": "p304",
+    "name": "Sting Energy Drink",
+    "category": "Beverages",
+    "price": 20,
+    "unit": "250 ml",
+    "image": "images/beverages.png",
+    "variants": [
+      "250 ml"
+    ],
+    "stock": "in_stock",
+    "description": "Energy drink with a citrus kick."
+  },
+  {
     "id": "p401",
-    "name": "Frozen Paratha",
+    "name": "ID Fresh Malabar Paratha",
     "category": "Frozen",
     "price": 60,
     "unit": "5 pcs",
@@ -242,7 +322,7 @@
   },
   {
     "id": "p402",
-    "name": "Veg Nuggets",
+    "name": "McCain Veg Nuggets",
     "category": "Frozen",
     "price": 90,
     "unit": "425 g",
@@ -255,7 +335,7 @@
   },
   {
     "id": "p403",
-    "name": "Ice Cream Tub",
+    "name": "Amul Vanilla Ice Cream Tub",
     "category": "Frozen",
     "price": 120,
     "unit": "700 ml",
@@ -268,7 +348,7 @@
   },
   {
     "id": "p501",
-    "name": "Bathing Soap",
+    "name": "Lux Bathing Soap",
     "category": "Personal Care",
     "price": 35,
     "unit": "1 bar",
@@ -282,7 +362,7 @@
   },
   {
     "id": "p502",
-    "name": "Shampoo Sachet",
+    "name": "Clinic Plus Shampoo Sachet",
     "category": "Personal Care",
     "price": 2,
     "unit": "1 sachet",
@@ -296,7 +376,7 @@
   },
   {
     "id": "p503",
-    "name": "Toothpaste",
+    "name": "Colgate Strong Teeth Toothpaste",
     "category": "Personal Care",
     "price": 45,
     "unit": "100 g",
@@ -310,7 +390,7 @@
   },
   {
     "id": "p504",
-    "name": "Hair Oil",
+    "name": "Parachute Coconut Hair Oil",
     "category": "Personal Care",
     "price": 60,
     "unit": "200 ml",
@@ -323,8 +403,21 @@
     "description": "Nourishing hair oil."
   },
   {
+    "id": "p505",
+    "name": "Dove Cream Beauty Bar",
+    "category": "Personal Care",
+    "price": 50,
+    "unit": "1 bar",
+    "image": "images/personal_care.png",
+    "variants": [
+      "1 bar"
+    ],
+    "stock": "in_stock",
+    "description": "Moisturizing beauty bar with 1/4 cream."
+  },
+  {
     "id": "p601",
-    "name": "Detergent Powder",
+    "name": "Surf Excel Detergent Powder",
     "category": "Household",
     "price": 55,
     "unit": "1 kg",
@@ -338,7 +431,7 @@
   },
   {
     "id": "p602",
-    "name": "Dishwash Bar",
+    "name": "Vim Dishwash Bar",
     "category": "Household",
     "price": 12,
     "unit": "1 bar",
@@ -352,7 +445,7 @@
   },
   {
     "id": "p603",
-    "name": "Floor Cleaner",
+    "name": "Lizol Disinfectant Floor Cleaner",
     "category": "Household",
     "price": 95,
     "unit": "1 L",
@@ -366,7 +459,7 @@
   },
   {
     "id": "p604",
-    "name": "Matchbox",
+    "name": "Ship Matchbox",
     "category": "Household",
     "price": 2,
     "unit": "1 box",
@@ -377,5 +470,19 @@
     ],
     "stock": "in_stock",
     "description": "Standard safety matchbox."
+  },
+  {
+    "id": "p605",
+    "name": "Harpic Toilet Cleaner",
+    "category": "Household",
+    "price": 65,
+    "unit": "500 ml",
+    "image": "images/household.png",
+    "variants": [
+      "500 ml",
+      "1 L"
+    ],
+    "stock": "in_stock",
+    "description": "Powerful germ-kill toilet cleaner."
   }
 ]
