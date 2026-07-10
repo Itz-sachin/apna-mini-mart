@@ -206,8 +206,6 @@ button { font-family: inherit; cursor: pointer; }
 }
 
 .upi-box { text-align: center; background: var(--surface); border-radius: 14px; padding: 16px; margin-top: 10px; }
-.upi-qr-code { display: flex; justify-content: center; margin: 8px auto; }
-.upi-qr-code img, .upi-qr-code canvas { width: 160px; height: 160px; }
 .upi-id { font-weight: 700; font-size: 15px; letter-spacing: 0.3px; }
 
 .screenshot-confirm {

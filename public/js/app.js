@@ -390,23 +390,6 @@ function renderUpiQrCode() {
   const payBtn = document.getElementById('upiPayBtn');
   payBtn.href = upiUrl;
   payBtn.textContent = `📱 Pay ${CONFIG.CURRENCY}${amount} via UPI App`;
-
-  const el = document.getElementById('upiQrCode');
-  el.innerHTML = '';
-  try {
-    if (typeof QRCode === 'undefined') throw new Error('QRCode library not loaded');
-    new QRCode(el, {
-      text: upiUrl,
-      width: 160,
-      height: 160,
-      colorDark: '#000000',
-      colorLight: '#ffffff',
-      correctLevel: QRCode.CorrectLevel.M,
-    });
-  } catch (e) {
-    console.error('QR code generation failed:', e);
-    el.innerHTML = '<div style="font-size:12px;color:var(--muted);padding:12px;">QR code unavailable — use the button above or pay to the UPI ID below.</div>';
-  }
 }
 
 function updateDeliveryOptions() {
@@ -464,7 +447,7 @@ function buildWhatsAppMessage(name, phone, address) {
       msg += `📍 Precise location: https://www.google.com/maps?q=${customerLocation.lat},${customerLocation.lng} (±${Math.round(customerLocation.accuracy)}m)\n`;
     }
   }
-  msg += `Payment: ${selectedPayment}\n\n📎 Payment screenshot attached below.`;
+  msg += `Payment: ${selectedPayment}\n\n(Payment screenshot attached below)`;
   return msg;
 }
 
@@ -491,6 +474,16 @@ async function placeOrder() {
   }
 
   const message = buildWhatsAppMessage(name, phone, address);
+  const waUrl = `https://wa.me/${CONFIG.WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
+
+  // Open WhatsApp synchronously, before any await — otherwise mobile browsers
+  // often silently block the popup because it's no longer tied to the tap
+  // that triggered it, and we must never clear the cart if that happens.
+  const waWindow = window.open(waUrl, '_blank');
+  if (!waWindow) {
+    showToast('Could not open WhatsApp. Please allow pop-ups for this site and tap Place Order again.');
+    return;
+  }
 
   // Best-effort: log order to backend for the shop owner's records.
   try {
@@ -509,9 +502,6 @@ async function placeOrder() {
   } catch (e) {
     // Offline or backend unreachable - WhatsApp message is the real source of truth anyway.
   }
-
-  const waUrl = `https://wa.me/${CONFIG.WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
-  window.open(waUrl, '_blank');
 
   cart = {};
   customerLocation = null;

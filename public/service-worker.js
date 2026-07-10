@@ -5,7 +5,7 @@
 //   - Icons/images: cache-first (rarely change, safe to cache aggressively)
 //   - /api/products: network-first, falling back to cache when offline
 
-const CACHE_VERSION = 'apna-mart-v3';
+const CACHE_VERSION = 'apna-mart-v4';
 const SHELL_CACHE = `${CACHE_VERSION}-shell`;
 const DATA_CACHE = `${CACHE_VERSION}-data`;
 
@@ -16,8 +16,7 @@ const CODE_ASSETS = [
   '/manifest.json',
   '/css/style.css',
   '/js/app.js',
-  '/js/admin.js',
-  '/js/qrcode.min.js'
+  '/js/admin.js'
 ];
 
 const IMAGE_ASSETS = [
