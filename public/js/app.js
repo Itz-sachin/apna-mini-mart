@@ -398,8 +398,10 @@ function renderUpiQrCode() {
 
   const payBtn = document.getElementById('upiPayBtn');
   payBtn.href = upiUrl;
-  document.getElementById('upiPayBtnLabel').textContent = `Or try Quick Pay ${CONFIG.CURRENCY}${amount} via UPI App`;
+  document.getElementById('upiPayBtnLabel').textContent = `Or tap to open your UPI app directly`;
   document.getElementById('upiManualAmount').textContent = `${CONFIG.CURRENCY}${amount}`;
+  document.getElementById('upiHeadingAmount').textContent = `${CONFIG.CURRENCY}${amount}`;
+  document.getElementById('upiQrImg').src = `/api/upi-qr?amount=${amount.toFixed(2)}`;
 }
 
 async function copyUpiId() {

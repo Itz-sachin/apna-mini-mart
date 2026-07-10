@@ -6,6 +6,20 @@ let PRODUCTS = [];
 document.getElementById('loginBtn').addEventListener('click', login);
 document.getElementById('addProductBtn').addEventListener('click', addProduct);
 
+let changePhotoTargetId = null;
+document.getElementById('changePhotoInput').addEventListener('change', async (e) => {
+  const file = e.target.files[0];
+  e.target.value = '';
+  if (!file || !changePhotoTargetId) return;
+  showToast('Uploading photo...');
+  const path = await uploadImage(file, changePhotoTargetId);
+  if (path) {
+    await updateProduct(changePhotoTargetId, { image: path });
+  } else {
+    showToast('Photo upload failed');
+  }
+});
+
 if (ADMIN_PASSWORD) {
   tryEnterDashboard();
 } 
@@ -55,6 +69,7 @@ function renderProductList() {
       <div class="admin-actions">
         <button class="edit" data-action="price" data-id="${p.id}">Edit Price</button>
         <button class="edit" data-action="stock" data-id="${p.id}">Change Stock</button>
+        <button class="edit" data-action="photo" data-id="${p.id}">Change Photo</button>
         <button class="danger" data-action="delete" data-id="${p.id}">Delete</button>
       </div>
     </div>
@@ -91,6 +106,12 @@ async function handleAction(action, id) {
     await updateProduct(id, { stock: val.trim() });
   }
 
+  if (action === 'photo') {
+    changePhotoTargetId = id;
+    document.getElementById('changePhotoInput').click();
+    return;
+  }
+
   if (action === 'delete') {
     if (!confirm(`Delete ${product.name}? This cannot be undone.`)) return;
     await fetch(`/api/admin/products/${id}`, {
@@ -99,6 +120,23 @@ async function handleAction(action, id) {
     });
     showToast('Product deleted');
     loadProducts();
+  }
+}
+
+async function uploadImage(file, productId) {
+  const formData = new FormData();
+  formData.append('image', file);
+  formData.append('productId', productId);
+  try {
+    const res = await fetch('/api/admin/upload-image', {
+      method: 'POST',
+      headers: { 'X-Admin-Password': ADMIN_PASSWORD },
+      body: formData,
+    });
+    const data = await res.json();
+    return res.ok ? data.path : null;
+  } catch (e) {
+    return null;
   }
 }
 
@@ -136,10 +174,19 @@ async function addProduct() {
     'Personal Care': 'images/personal_care.png', Household: 'images/household.png',
   };
 
+  const newId = 'p' + Date.now();
+  let image = imageMap[category];
+  const photoFile = document.getElementById('newPhoto').files[0];
+  if (photoFile) {
+    showToast('Uploading photo...');
+    const uploadedPath = await uploadImage(photoFile, newId);
+    if (uploadedPath) image = uploadedPath;
+  }
+
   const res = await fetch('/api/admin/products', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json', 'X-Admin-Password': ADMIN_PASSWORD },
-    body: JSON.stringify({ name, category, price, unit, variants, stock, image: imageMap[category] }),
+    body: JSON.stringify({ id: newId, name, category, price, unit, variants, stock, image }),
   });
 
   if (res.ok) {
@@ -148,6 +195,7 @@ async function addProduct() {
     document.getElementById('newPrice').value = '';
     document.getElementById('newUnit').value = '';
     document.getElementById('newVariants').value = '';
+    document.getElementById('newPhoto').value = '';
     loadProducts();
   } else {
     showToast('Failed to add product - check admin password');

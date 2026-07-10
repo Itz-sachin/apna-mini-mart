@@ -6,6 +6,8 @@
 const express = require('express');
 const fs = require('fs');
 const path = require('path');
+const QRCode = require('qrcode');
+const multer = require('multer');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -15,13 +17,32 @@ const PORT = process.env.PORT || 3000;
 //   ADMIN_PASSWORD=yourSecretPassword node server.js
 const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'changeme123';
 
+// ---- UPI payment details ----
+const UPI_ID = process.env.UPI_ID || 'sachinkumar.ibz1@icici';
+const STORE_NAME = 'Apna Mini Mart';
+
 const PRODUCTS_FILE = path.join(__dirname, 'data', 'products.json');
 const ORDERS_FILE = path.join(__dirname, 'data', 'orders.json');
+const PRODUCT_IMAGES_DIR = path.join(__dirname, 'public', 'images', 'products');
 
 // Ensure orders file exists
 if (!fs.existsSync(ORDERS_FILE)) {
   fs.writeFileSync(ORDERS_FILE, '[]', 'utf-8');
 }
+if (!fs.existsSync(PRODUCT_IMAGES_DIR)) {
+  fs.mkdirSync(PRODUCT_IMAGES_DIR, { recursive: true });
+}
+
+const upload = multer({
+  storage: multer.memoryStorage(),
+  limits: { fileSize: 5 * 1024 * 1024 }, // 5 MB
+  fileFilter: (req, file, cb) => {
+    if (!/^image\/(jpeg|png|webp)$/.test(file.mimetype)) {
+      return cb(new Error('Only JPEG, PNG or WebP images are allowed'));
+    }
+    cb(null, true);
+  },
+});
 
 app.use(express.json());
 
@@ -65,6 +86,21 @@ app.get('/api/products', (req, res) => {
   }
 });
 
+// Generate a UPI payment QR code (PNG) for the given amount, rendered
+// server-side so it never depends on a client-side QR library working.
+app.get('/api/upi-qr', async (req, res) => {
+  const amount = Math.max(0, parseFloat(req.query.amount) || 0).toFixed(2);
+  const upiUrl = `upi://pay?pa=${UPI_ID}&pn=${encodeURIComponent(STORE_NAME)}&am=${amount}&cu=INR&tn=${encodeURIComponent('Order at ' + STORE_NAME)}`;
+  try {
+    const png = await QRCode.toBuffer(upiUrl, { type: 'png', width: 300, margin: 1 });
+    res.set('Content-Type', 'image/png');
+    res.set('Cache-Control', 'no-store');
+    res.send(png);
+  } catch (e) {
+    res.status(500).end();
+  }
+});
+
 // Log a placed order (best-effort; the real "confirmation" happens via WhatsApp)
 app.post('/api/orders', (req, res) => {
   try {
@@ -96,6 +132,18 @@ app.post('/api/admin/login', (req, res) => {
 // List orders (admin only)
 app.get('/api/admin/orders', requireAdmin, (req, res) => {
   res.json(readJSON(ORDERS_FILE));
+});
+
+// Upload a product photo (admin only) - saves to public/images/products/
+app.post('/api/admin/upload-image', requireAdmin, (req, res) => {
+  upload.single('image')(req, res, (err) => {
+    if (err) return res.status(400).json({ error: err.message });
+    if (!req.file) return res.status(400).json({ error: 'No image file provided' });
+    const ext = req.file.mimetype === 'image/png' ? 'png' : req.file.mimetype === 'image/webp' ? 'webp' : 'jpg';
+    const filename = `${(req.body.productId || 'p' + Date.now())}-${Date.now()}.${ext}`;
+    fs.writeFileSync(path.join(PRODUCT_IMAGES_DIR, filename), req.file.buffer);
+    res.json({ ok: true, path: `images/products/${filename}` });
+  });
 });
 
 // Add a new product

@@ -38,6 +38,10 @@
       </div>
       <div class="form-group"><label>Price (₹)</label><input type="number" id="newPrice" /></div>
       <div class="form-group"><label>Unit (e.g. 1 kg, 500 ml)</label><input type="text" id="newUnit" /></div>
+      <div class="form-group">
+        <label>Photo (optional - one-time upload, replace anytime)</label>
+        <input type="file" id="newPhoto" accept="image/jpeg,image/png,image/webp" />
+      </div>
       <div class="form-group"><label>Variants (comma-separated, optional)</label><input type="text" id="newVariants" placeholder="500 g, 1 kg" /></div>
       <div class="form-group">
         <label>Stock status</label>
@@ -51,6 +55,7 @@
     </div>
 
     <h3>Current Products</h3>
+    <input type="file" id="changePhotoInput" accept="image/jpeg,image/png,image/webp" style="display:none;" />
     <div id="productList"></div>
   </div>
 </div>

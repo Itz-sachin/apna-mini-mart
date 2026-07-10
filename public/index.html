@@ -110,18 +110,27 @@
     <div class="form-group">
       <label>Payment method</label>
       <div class="upi-box" id="upiBox">
-        <div style="font-weight:700;font-size:14px;margin-bottom:10px;">Pay manually (most reliable)</div>
+        <div class="upi-box-heading">Pay <span id="upiHeadingAmount">₹0</span> via UPI</div>
+
+        <div class="upi-qr-wrap">
+          <img id="upiQrImg" alt="UPI QR code" width="180" height="180" />
+          <div class="upi-qr-caption">Scan with any UPI app</div>
+        </div>
+
+        <div class="upi-or-divider"><span>OR pay manually</span></div>
+
         <div class="upi-id-row">
           <div class="upi-id" id="upiIdText">apnaminimart@upi</div>
           <button type="button" id="copyUpiBtn" class="copy-upi-btn">Copy</button>
         </div>
         <ol class="upi-steps">
-          <li>Open your UPI app (GPay, PhonePe, Paytm, etc.)</li>
-          <li>Choose "Send Money" / "Pay" → "Enter UPI ID"</li>
-          <li>Paste the ID above and pay <strong id="upiManualAmount">₹0</strong></li>
+          <li>Open your UPI app (GPay, PhonePe, Paytm...)</li>
+          <li>Tap "Send Money" → "Enter UPI ID"</li>
+          <li>Paste the ID above, pay <strong id="upiManualAmount">₹0</strong></li>
         </ol>
-        <a id="upiPayBtn" class="secondary-btn upi-pay-btn" href="#" style="margin-top:6px;">
-          <span id="upiPayBtnLabel">Or try Quick Pay via UPI App</span>
+
+        <a id="upiPayBtn" class="secondary-btn upi-pay-btn" href="#">
+          <span id="upiPayBtnLabel">Or tap to open your UPI app directly</span>
         </a>
       </div>
     </div>

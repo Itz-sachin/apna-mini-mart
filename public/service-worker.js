@@ -5,7 +5,7 @@
 //   - Icons/images: cache-first (rarely change, safe to cache aggressively)
 //   - /api/products: network-first, falling back to cache when offline
 
-const CACHE_VERSION = 'apna-mart-v5';
+const CACHE_VERSION = 'apna-mart-v6';
 const SHELL_CACHE = `${CACHE_VERSION}-shell`;
 const DATA_CACHE = `${CACHE_VERSION}-data`;
 
@@ -76,8 +76,8 @@ self.addEventListener('fetch', (event) => {
     return;
   }
 
-  // Never cache admin mutation calls or order submissions
-  if (url.pathname.startsWith('/api/admin') || url.pathname.startsWith('/api/orders')) {
+  // Never cache admin mutation calls, order submissions, or the dynamic UPI QR
+  if (url.pathname.startsWith('/api/admin') || url.pathname.startsWith('/api/orders') || url.pathname.startsWith('/api/upi-qr')) {
     event.respondWith(fetch(request));
     return;
   }
