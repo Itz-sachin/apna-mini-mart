@@ -5,7 +5,7 @@
 //   - Icons/images: cache-first (rarely change, safe to cache aggressively)
 //   - /api/products: network-first, falling back to cache when offline
 
-const CACHE_VERSION = 'apna-mart-v2';
+const CACHE_VERSION = 'apna-mart-v3';
 const SHELL_CACHE = `${CACHE_VERSION}-shell`;
 const DATA_CACHE = `${CACHE_VERSION}-data`;
 
@@ -16,7 +16,8 @@ const CODE_ASSETS = [
   '/manifest.json',
   '/css/style.css',
   '/js/app.js',
-  '/js/admin.js'
+  '/js/admin.js',
+  '/js/qrcode.min.js'
 ];
 
 const IMAGE_ASSETS = [
@@ -35,8 +36,7 @@ const IMAGE_ASSETS = [
   '/images/frozen.png',
   '/images/personal_care.png',
   '/images/household.png',
-  '/images/placeholder.png',
-  '/images/upi-qr.png'
+  '/images/placeholder.png'
 ];
 
 self.addEventListener('install', (event) => {

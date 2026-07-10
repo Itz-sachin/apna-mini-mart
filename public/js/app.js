@@ -377,9 +377,25 @@ let deliveryWasForced = false; // true when pickup was auto-forced by low cart v
 function openCheckout() {
   document.getElementById('checkoutSummary').innerHTML = checkoutSummaryHTML();
   updateDeliveryOptions();
+  renderUpiQrCode();
   document.getElementById('screenshotConfirm').checked = false;
   document.getElementById('placeOrderBtn').disabled = true;
   openOverlay('checkoutOverlay');
+}
+
+function renderUpiQrCode() {
+  const amount = cartTotal();
+  const upiUrl = `upi://pay?pa=${encodeURIComponent(CONFIG.UPI_ID)}&pn=${encodeURIComponent(CONFIG.STORE_NAME)}&am=${amount}&cu=INR&tn=${encodeURIComponent('Order at ' + CONFIG.STORE_NAME)}`;
+  const el = document.getElementById('upiQrCode');
+  el.innerHTML = '';
+  new QRCode(el, {
+    text: upiUrl,
+    width: 160,
+    height: 160,
+    colorDark: '#000000',
+    colorLight: '#ffffff',
+    correctLevel: QRCode.CorrectLevel.M,
+  });
 }
 
 function updateDeliveryOptions() {
