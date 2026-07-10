@@ -1,5 +1,5 @@
 /* Apna Mini Mart - mobile-first stylesheet
-   Theme: white background, green #22C55E + orange #F97316 accents
+   Theme: dark background, green #22C55E + orange #F97316 accents
    Priority: fast rendering on low-end phones -> no heavy frameworks, minimal CSS */
 
 :root {
@@ -7,12 +7,12 @@
   --green-dark: #16A34A;
   --orange: #F97316;
   --orange-dark: #EA580C;
-  --text: #1E293B;
-  --muted: #64748B;
-  --bg: #FFFFFF;
-  --surface: #F8FAFC;
-  --border: #E2E8F0;
-  --danger: #EF4444;
+  --text: #F1F5F9;
+  --muted: #94A3B8;
+  --bg: #0F172A;
+  --surface: #1E293B;
+  --border: #334155;
+  --danger: #F87171;
   --radius: 14px;
 }
 
@@ -78,7 +78,7 @@ button { font-family: inherit; cursor: pointer; }
   padding: 10px 16px;
   border-radius: 999px;
   border: 1.5px solid var(--border);
-  background: white; color: var(--text);
+  background: var(--surface); color: var(--text);
   font-size: 13.5px; font-weight: 600;
   white-space: nowrap;
 }
@@ -94,7 +94,7 @@ button { font-family: inherit; cursor: pointer; }
   padding: 4px 16px 90px;
 }
 .product-card {
-  background: white;
+  background: var(--surface);
   border: 1px solid var(--border);
   border-radius: var(--radius);
   overflow: hidden;
@@ -120,7 +120,7 @@ button { font-family: inherit; cursor: pointer; }
   border-radius: 10px; padding: 10px; font-weight: 700; font-size: 13.5px;
   width: 100%;
 }
-.add-btn:disabled { background: #CBD5E1; color: #64748B; }
+.add-btn:disabled { background: #334155; color: #64748B; }
 .qty-stepper {
   margin-top: 6px; display: flex; align-items: center; justify-content: space-between;
   background: var(--green); border-radius: 10px; overflow: hidden;
@@ -135,18 +135,18 @@ button { font-family: inherit; cursor: pointer; }
 .variant-row { display: flex; flex-wrap: wrap; gap: 8px; margin: 10px 0; }
 .variant-pill {
   padding: 8px 14px; border-radius: 999px; border: 1.5px solid var(--border);
-  font-size: 13px; font-weight: 600; background: white;
+  font-size: 13px; font-weight: 600; background: var(--surface);
 }
 .variant-pill.selected { border-color: var(--orange); background: #FFF7ED; color: var(--orange-dark); }
 
 /* ---------- Bottom sheet / modal ---------- */
 .overlay {
-  position: fixed; inset: 0; background: rgba(15,23,42,0.45);
+  position: fixed; inset: 0; background: rgba(0,0,0,0.6);
   display: flex; align-items: flex-end; z-index: 50;
 }
 .overlay.hidden { display: none; }
 .sheet {
-  background: white; width: 100%;
+  background: var(--surface); width: 100%;
   border-radius: 20px 20px 0 0;
   max-height: 88vh; overflow-y: auto;
   padding: 18px 18px calc(18px + env(safe-area-inset-bottom));
@@ -168,7 +168,7 @@ button { font-family: inherit; cursor: pointer; }
 
 .checkout-fab {
   position: fixed; bottom: 0; left: 0; right: 0; z-index: 30;
-  background: white; border-top: 1px solid var(--border);
+  background: var(--surface); border-top: 1px solid var(--border);
   padding: 10px 16px calc(10px + env(safe-area-inset-bottom));
   display: flex; align-items: center; justify-content: space-between; gap: 12px;
 }
@@ -187,8 +187,9 @@ button { font-family: inherit; cursor: pointer; }
 .form-group label { display: block; font-size: 13px; font-weight: 700; margin-bottom: 6px; }
 .form-group input, .form-group textarea, .form-group select {
   width: 100%; padding: 12px 14px; border: 1.5px solid var(--border);
-  border-radius: 10px; font-size: 15px; background: white;
+  border-radius: 10px; font-size: 15px; background: var(--surface); color: var(--text);
 }
+.form-group input::placeholder, .form-group textarea::placeholder { color: var(--muted); }
 .pay-options { display: flex; gap: 10px; }
 .pay-option {
   flex: 1; padding: 14px; border: 1.5px solid var(--border); border-radius: 12px;
@@ -208,21 +209,16 @@ button { font-family: inherit; cursor: pointer; }
 .upi-box { text-align: center; background: var(--surface); border-radius: 14px; padding: 16px; margin-top: 10px; }
 .upi-id { font-weight: 700; font-size: 15px; letter-spacing: 0.3px; }
 .upi-pay-btn {
-  display: flex; align-items: center; justify-content: center; gap: 10px;
+  display: flex; align-items: center; justify-content: center;
   text-decoration: none;
 }
-.upi-badge {
-  background: white; border-radius: 6px; padding: 4px 8px;
-  display: flex; align-items: center; flex-shrink: 0;
-}
-.upi-badge img { height: 16px; width: auto; display: block; }
 
 .screenshot-confirm {
   display: flex; align-items: flex-start; gap: 8px; margin: 14px 0;
   font-size: 13px; font-weight: 600; line-height: 1.4; cursor: pointer;
 }
 .screenshot-confirm input { width: 18px; height: 18px; flex-shrink: 0; margin-top: 1px; }
-.primary-btn:disabled { background: #CBD5E1; color: #64748B; }
+.primary-btn:disabled { background: #334155; color: #64748B; }
 
 .primary-btn {
   width: 100%; padding: 14px; background: var(--green); color: white;
@@ -240,7 +236,7 @@ button { font-family: inherit; cursor: pointer; }
 /* ---------- Toast ---------- */
 .toast {
   position: fixed; bottom: 90px; left: 50%; transform: translateX(-50%);
-  background: var(--text); color: white; padding: 10px 18px; border-radius: 999px;
+  background: #334155; color: white; padding: 10px 18px; border-radius: 999px;
   font-size: 13.5px; z-index: 60; opacity: 0; transition: opacity 0.2s;
   pointer-events: none;
 }
@@ -257,7 +253,7 @@ button { font-family: inherit; cursor: pointer; }
 .admin-wrap { max-width: 720px; margin: 0 auto; padding: 16px; padding-bottom: 60px; }
 .admin-header { background: var(--green); color: white; padding: 16px; font-weight: 800; font-size: 18px; }
 .admin-card {
-  background: white; border: 1px solid var(--border); border-radius: 14px;
+  background: var(--surface); border: 1px solid var(--border); border-radius: 14px;
   padding: 14px; margin-bottom: 12px;
 }
 .admin-product-row { display: flex; gap: 10px; align-items: center; }
@@ -268,7 +264,7 @@ button { font-family: inherit; cursor: pointer; }
 .admin-actions { display: flex; gap: 8px; margin-top: 8px; }
 .admin-actions button {
   flex: 1; padding: 8px; border-radius: 8px; border: 1.5px solid var(--border);
-  background: white; font-weight: 700; font-size: 12.5px;
+  background: var(--surface); color: var(--text); font-weight: 700; font-size: 12.5px;
 }
 .admin-actions button.danger { color: var(--danger); border-color: #FCA5A5; }
 .admin-actions button.edit { color: var(--green-dark); border-color: #86EFAC; }

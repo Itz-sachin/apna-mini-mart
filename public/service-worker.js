@@ -35,8 +35,7 @@ const IMAGE_ASSETS = [
   '/images/frozen.png',
   '/images/personal_care.png',
   '/images/household.png',
-  '/images/placeholder.png',
-  '/images/upi-logo.svg'
+  '/images/placeholder.png'
 ];
 
 self.addEventListener('install', (event) => {
