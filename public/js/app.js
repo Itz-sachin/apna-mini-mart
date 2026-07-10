@@ -394,7 +394,7 @@ function renderUpiQrCode() {
   // lightweight link parsers look for a literal "@" and fail ("payment
   // failed"/"invalid payee") if it arrives as %40. Amount must carry 2
   // decimal places or several banking apps reject the link outright.
-  const upiUrl = `upi://pay?pa=${CONFIG.UPI_ID}&pn=${encodeURIComponent(CONFIG.STORE_NAME)}&am=${amount.toFixed(2)}&cu=INR&tn=${encodeURIComponent('Order at ' + CONFIG.STORE_NAME)}&tr=${Date.now()}`;
+  const upiUrl = `upi://pay?pa=${CONFIG.UPI_ID}&pn=${encodeURIComponent(CONFIG.STORE_NAME)}&am=${amount.toFixed(2)}&cu=INR&tn=${encodeURIComponent('Order at ' + CONFIG.STORE_NAME)}`;
 
   const payBtn = document.getElementById('upiPayBtn');
   payBtn.href = upiUrl;
