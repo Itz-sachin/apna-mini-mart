@@ -377,6 +377,8 @@ let deliveryWasForced = false; // true when pickup was auto-forced by low cart v
 function openCheckout() {
   document.getElementById('checkoutSummary').innerHTML = checkoutSummaryHTML();
   updateDeliveryOptions();
+  document.getElementById('screenshotConfirm').checked = false;
+  document.getElementById('placeOrderBtn').disabled = true;
   openOverlay('checkoutOverlay');
 }
 
@@ -435,7 +437,7 @@ function buildWhatsAppMessage(name, phone, address) {
       msg += `📍 Precise location: https://www.google.com/maps?q=${customerLocation.lat},${customerLocation.lng} (±${Math.round(customerLocation.accuracy)}m)\n`;
     }
   }
-  msg += `Payment: ${selectedPayment}`;
+  msg += `Payment: ${selectedPayment}\n\n📎 Payment screenshot attached below.`;
   return msg;
 }
 
@@ -454,6 +456,10 @@ async function placeOrder() {
   }
   if (!Object.keys(cart).length) {
     showToast('Your cart is empty');
+    return;
+  }
+  if (!document.getElementById('screenshotConfirm').checked) {
+    showToast('Please confirm you will attach your payment screenshot');
     return;
   }
 
@@ -531,6 +537,9 @@ function bindGlobalEvents() {
 
   document.getElementById('placeOrderBtn').addEventListener('click', placeOrder);
   document.getElementById('locBtn').addEventListener('click', captureLocation);
+  document.getElementById('screenshotConfirm').addEventListener('change', (e) => {
+    document.getElementById('placeOrderBtn').disabled = !e.target.checked;
+  });
 }
 
 // ============== Utilities ==============

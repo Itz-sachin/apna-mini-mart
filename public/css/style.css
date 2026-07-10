@@ -209,6 +209,13 @@ button { font-family: inherit; cursor: pointer; }
 .upi-box img { width: 160px; height: 160px; margin: 8px auto; }
 .upi-id { font-weight: 700; font-size: 15px; letter-spacing: 0.3px; }
 
+.screenshot-confirm {
+  display: flex; align-items: flex-start; gap: 8px; margin: 14px 0;
+  font-size: 13px; font-weight: 600; line-height: 1.4; cursor: pointer;
+}
+.screenshot-confirm input { width: 18px; height: 18px; flex-shrink: 0; margin-top: 1px; }
+.primary-btn:disabled { background: #CBD5E1; color: #64748B; }
+
 .primary-btn {
   width: 100%; padding: 14px; background: var(--green); color: white;
   border: none; border-radius: 12px; font-weight: 800; font-size: 15.5px; margin-top: 6px;
