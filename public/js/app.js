@@ -5,7 +5,7 @@
 const CONFIG = {
   STORE_NAME: 'Apna Mini Mart',
   WHATSAPP_NUMBER: '918882396880', // shop's WhatsApp number (91 = India country code + 8882396880)
-  UPI_ID: 'apnaminimart@upi',      // <-- put shop's real UPI ID here
+  UPI_ID: 'sachinkumar.ibz1@icici',
   CURRENCY: '₹',
 };
 document.getElementById('upiIdText').textContent = CONFIG.UPI_ID;
