@@ -386,16 +386,27 @@ function openCheckout() {
 function renderUpiQrCode() {
   const amount = cartTotal();
   const upiUrl = `upi://pay?pa=${encodeURIComponent(CONFIG.UPI_ID)}&pn=${encodeURIComponent(CONFIG.STORE_NAME)}&am=${amount}&cu=INR&tn=${encodeURIComponent('Order at ' + CONFIG.STORE_NAME)}`;
+
+  const payBtn = document.getElementById('upiPayBtn');
+  payBtn.href = upiUrl;
+  payBtn.textContent = `📱 Pay ${CONFIG.CURRENCY}${amount} via UPI App`;
+
   const el = document.getElementById('upiQrCode');
   el.innerHTML = '';
-  new QRCode(el, {
-    text: upiUrl,
-    width: 160,
-    height: 160,
-    colorDark: '#000000',
-    colorLight: '#ffffff',
-    correctLevel: QRCode.CorrectLevel.M,
-  });
+  try {
+    if (typeof QRCode === 'undefined') throw new Error('QRCode library not loaded');
+    new QRCode(el, {
+      text: upiUrl,
+      width: 160,
+      height: 160,
+      colorDark: '#000000',
+      colorLight: '#ffffff',
+      correctLevel: QRCode.CorrectLevel.M,
+    });
+  } catch (e) {
+    console.error('QR code generation failed:', e);
+    el.innerHTML = '<div style="font-size:12px;color:var(--muted);padding:12px;">QR code unavailable — use the button above or pay to the UPI ID below.</div>';
+  }
 }
 
 function updateDeliveryOptions() {
