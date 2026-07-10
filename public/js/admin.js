@@ -15,10 +15,44 @@ document.getElementById('changePhotoInput').addEventListener('change', async (e)
   const path = await uploadImage(file, changePhotoTargetId);
   if (path) {
     await updateProduct(changePhotoTargetId, { image: path });
-  } else {
-    showToast('Photo upload failed');
   }
 });
+
+// Phone camera photos are often 3-8MB and can be HEIC on iPhones - resize and
+// re-encode to JPEG in the browser before upload so large/oversized photos
+// never get silently rejected, and pages load faster for customers.
+function compressImage(file, maxDimension = 1000, quality = 0.8) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onerror = () => reject(new Error('Could not read the selected file'));
+    reader.onload = (e) => {
+      const img = new Image();
+      img.onload = () => {
+        let { width, height } = img;
+        if (width > maxDimension || height > maxDimension) {
+          if (width > height) {
+            height = Math.round(height * (maxDimension / width));
+            width = maxDimension;
+          } else {
+            width = Math.round(width * (maxDimension / height));
+            height = maxDimension;
+          }
+        }
+        const canvas = document.createElement('canvas');
+        canvas.width = width;
+        canvas.height = height;
+        canvas.getContext('2d').drawImage(img, 0, 0, width, height);
+        canvas.toBlob((blob) => {
+          if (blob) resolve(blob);
+          else reject(new Error('Could not process this image'));
+        }, 'image/jpeg', quality);
+      };
+      img.onerror = () => reject(new Error('Could not read this photo - try a JPG or PNG instead'));
+      img.src = e.target.result;
+    };
+    reader.readAsDataURL(file);
+  });
+}
 
 if (ADMIN_PASSWORD) {
   tryEnterDashboard();
@@ -124,8 +158,16 @@ async function handleAction(action, id) {
 }
 
 async function uploadImage(file, productId) {
+  let compressed;
+  try {
+    compressed = await compressImage(file);
+  } catch (e) {
+    showToast(e.message || 'Could not process this photo');
+    return null;
+  }
+
   const formData = new FormData();
-  formData.append('image', file);
+  formData.append('image', compressed, 'photo.jpg');
   formData.append('productId', productId);
   try {
     const res = await fetch('/api/admin/upload-image', {
@@ -134,8 +176,13 @@ async function uploadImage(file, productId) {
       body: formData,
     });
     const data = await res.json();
-    return res.ok ? data.path : null;
+    if (!res.ok) {
+      showToast(data.error || 'Photo upload failed');
+      return null;
+    }
+    return data.path;
   } catch (e) {
+    showToast('Photo upload failed - check your connection');
     return null;
   }
 }

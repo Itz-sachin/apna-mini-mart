@@ -35,7 +35,7 @@ if (!fs.existsSync(PRODUCT_IMAGES_DIR)) {
 
 const upload = multer({
   storage: multer.memoryStorage(),
-  limits: { fileSize: 5 * 1024 * 1024 }, // 5 MB
+  limits: { fileSize: 15 * 1024 * 1024 }, // 15 MB - client compresses before upload, this is just a safety margin
   fileFilter: (req, file, cb) => {
     if (!/^image\/(jpeg|png|webp)$/.test(file.mimetype)) {
       return cb(new Error('Only JPEG, PNG or WebP images are allowed'));
