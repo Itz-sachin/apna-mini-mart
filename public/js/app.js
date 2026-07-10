@@ -91,19 +91,58 @@ function renderProductGrid() {
   filtered.forEach((p) => {
     const card = grid.querySelector(`[data-product-id="${p.id}"]`);
     if (!card) return;
-    card.querySelector('.thumb, .product-info').addEventListener?.('click', () => openProductSheet(p));
     card.addEventListener('click', (e) => {
-      if (e.target.closest('.add-btn') || e.target.closest('.qty-stepper')) return;
+      if (e.target.closest('.product-actions')) return;
       openProductSheet(p);
     });
-    const addBtn = card.querySelector('.add-btn');
-    if (addBtn) {
-      addBtn.addEventListener('click', (e) => {
-        e.stopPropagation();
-        addToCart(p, p.variants && p.variants[0] ? p.variants[0] : p.unit, 1);
-      });
-    }
+    bindCardActions(card, p);
   });
+}
+
+function defaultVariant(p) {
+  return p.variants && p.variants[0] ? p.variants[0] : p.unit;
+}
+
+function productActionHTML(p) {
+  if (p.stock === 'out_of_stock') {
+    return `<button class="add-btn" disabled>Out of Stock</button>`;
+  }
+  const key = cartKey(p.id, defaultVariant(p));
+  const qty = cart[key] ? cart[key].qty : 0;
+  if (qty > 0) {
+    return `
+      <div class="qty-stepper">
+        <button data-delta="-1">-</button>
+        <span>${qty}</span>
+        <button data-delta="1">+</button>
+      </div>`;
+  }
+  return `<button class="add-btn">Add to Cart</button>`;
+}
+
+function bindCardActions(card, p) {
+  const wrap = card.querySelector('.product-actions');
+  const addBtn = wrap.querySelector('.add-btn');
+  if (addBtn && !addBtn.disabled) {
+    addBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      addToCart(p, defaultVariant(p), 1);
+      refreshCardActions(card, p);
+    });
+  }
+  wrap.querySelectorAll('.qty-stepper button[data-delta]').forEach((btn) => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      changeQty(cartKey(p.id, defaultVariant(p)), parseInt(btn.dataset.delta, 10));
+      refreshCardActions(card, p);
+    });
+  });
+}
+
+function refreshCardActions(card, p) {
+  const wrap = card.querySelector('.product-actions');
+  wrap.innerHTML = productActionHTML(p);
+  bindCardActions(card, p);
 }
 
 function stockTagHTML(stock) {
@@ -113,7 +152,6 @@ function stockTagHTML(stock) {
 }
 
 function productCardHTML(p) {
-  const outOfStock = p.stock === 'out_of_stock';
   return `
   <div class="product-card" data-product-id="${p.id}">
     <img class="thumb" src="${p.image || 'images/placeholder.png'}" loading="lazy" alt="${escapeHTML(p.name)}" />
@@ -122,9 +160,7 @@ function productCardHTML(p) {
       <div class="product-unit">${escapeHTML(p.unit)}</div>
       <div class="product-price">${CONFIG.CURRENCY}${p.price}</div>
       ${stockTagHTML(p.stock)}
-      ${outOfStock
-        ? `<button class="add-btn" disabled>Out of Stock</button>`
-        : `<button class="add-btn">Add to Cart</button>`}
+      <div class="product-actions">${productActionHTML(p)}</div>
     </div>
   </div>`;
 }
@@ -163,6 +199,8 @@ function openProductSheet(p) {
       addToCart(p, selectedVariant, 1);
       closeOverlay('productOverlay');
       showToast(`${p.name} added to cart`);
+      const card = document.querySelector(`[data-product-id="${p.id}"]`);
+      if (card) refreshCardActions(card, p);
     });
   }
 
