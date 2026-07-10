@@ -398,7 +398,17 @@ function renderUpiQrCode() {
 
   const payBtn = document.getElementById('upiPayBtn');
   payBtn.href = upiUrl;
-  document.getElementById('upiPayBtnLabel').textContent = `Pay ${CONFIG.CURRENCY}${amount} via UPI App`;
+  document.getElementById('upiPayBtnLabel').textContent = `Or try Quick Pay ${CONFIG.CURRENCY}${amount} via UPI App`;
+  document.getElementById('upiManualAmount').textContent = `${CONFIG.CURRENCY}${amount}`;
+}
+
+async function copyUpiId() {
+  try {
+    await navigator.clipboard.writeText(CONFIG.UPI_ID);
+    showToast('UPI ID copied!');
+  } catch (e) {
+    showToast('Could not copy - please select and copy manually');
+  }
 }
 
 function updateDeliveryOptions() {
@@ -563,6 +573,7 @@ function bindGlobalEvents() {
 
   document.getElementById('placeOrderBtn').addEventListener('click', placeOrder);
   document.getElementById('locBtn').addEventListener('click', captureLocation);
+  document.getElementById('copyUpiBtn').addEventListener('click', copyUpiId);
   document.getElementById('screenshotConfirm').addEventListener('change', (e) => {
     document.getElementById('placeOrderBtn').disabled = !e.target.checked;
   });
