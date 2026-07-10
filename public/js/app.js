@@ -7,6 +7,7 @@ const CONFIG = {
   WHATSAPP_NUMBER: '918882396880', // shop's WhatsApp number (91 = India country code + 8882396880)
   UPI_ID: 'sachinkumar.ibz1@icici',
   CURRENCY: '₹',
+  MIN_DELIVERY_VALUE: 1000, // orders below this must be picked up from the store
 };
 document.getElementById('upiIdText').textContent = CONFIG.UPI_ID;
 
@@ -369,11 +370,40 @@ async function reverseGeocode(lat, lng) {
 }
 
 
-let selectedPayment = 'COD';
+const selectedPayment = 'UPI';
+let selectedDelivery = 'delivery';
+let deliveryWasForced = false; // true when pickup was auto-forced by low cart value, not chosen by the customer
 
 function openCheckout() {
   document.getElementById('checkoutSummary').innerHTML = checkoutSummaryHTML();
+  updateDeliveryOptions();
   openOverlay('checkoutOverlay');
+}
+
+function updateDeliveryOptions() {
+  const total = cartTotal();
+  const eligible = total >= CONFIG.MIN_DELIVERY_VALUE;
+  const deliveryBtn = document.querySelector('#deliveryOptions [data-delivery="delivery"]');
+  const pickupBtn = document.querySelector('#deliveryOptions [data-delivery="pickup"]');
+  const lockNote = document.getElementById('deliveryLockNote');
+
+  if (!eligible) {
+    selectedDelivery = 'pickup';
+    deliveryWasForced = true;
+    deliveryBtn.classList.add('disabled');
+    lockNote.style.display = 'block';
+  } else {
+    if (deliveryWasForced) {
+      selectedDelivery = 'delivery';
+      deliveryWasForced = false;
+    }
+    deliveryBtn.classList.remove('disabled');
+    lockNote.style.display = 'none';
+  }
+
+  deliveryBtn.classList.toggle('selected', selectedDelivery === 'delivery');
+  pickupBtn.classList.toggle('selected', selectedDelivery === 'pickup');
+  document.getElementById('deliveryAddressFields').style.display = selectedDelivery === 'delivery' ? 'block' : 'none';
 }
 
 function checkoutSummaryHTML() {
@@ -397,9 +427,13 @@ function buildWhatsAppMessage(name, phone, address) {
     msg += `• ${i.name} (${i.variant}) x${i.qty} - ${CONFIG.CURRENCY}${i.qty * i.price}\n`;
   });
   msg += `\n*Total: ${CONFIG.CURRENCY}${total}*\n\n`;
-  msg += `Name: ${name}\nPhone: ${phone}\nAddress: ${address}\n`;
-  if (customerLocation) {
-    msg += `📍 Precise location: https://www.google.com/maps?q=${customerLocation.lat},${customerLocation.lng} (±${Math.round(customerLocation.accuracy)}m)\n`;
+  msg += `Name: ${name}\nPhone: ${phone}\n`;
+  msg += `Delivery: ${selectedDelivery === 'delivery' ? 'Home Delivery' : 'Store Pickup'}\n`;
+  if (selectedDelivery === 'delivery') {
+    msg += `Address: ${address}\n`;
+    if (customerLocation) {
+      msg += `📍 Precise location: https://www.google.com/maps?q=${customerLocation.lat},${customerLocation.lng} (±${Math.round(customerLocation.accuracy)}m)\n`;
+    }
   }
   msg += `Payment: ${selectedPayment}`;
   return msg;
@@ -410,8 +444,12 @@ async function placeOrder() {
   const phone = document.getElementById('custPhone').value.trim();
   const address = document.getElementById('custAddress').value.trim();
 
-  if (!name || !phone || !address) {
-    showToast('Please fill name, phone and address');
+  if (!name || !phone) {
+    showToast('Please fill name and phone');
+    return;
+  }
+  if (selectedDelivery === 'delivery' && !address) {
+    showToast('Please fill your delivery address');
     return;
   }
   if (!Object.keys(cart).length) {
@@ -427,8 +465,9 @@ async function placeOrder() {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        customer: { name, phone, address },
-        location: customerLocation, // { lat, lng, accuracy } or null if not captured
+        customer: { name, phone, address: selectedDelivery === 'delivery' ? address : null },
+        deliveryMethod: selectedDelivery,
+        location: selectedDelivery === 'delivery' ? customerLocation : null,
         payment: selectedPayment,
         items: Object.values(cart),
         total: cartTotal(),
@@ -443,6 +482,7 @@ async function placeOrder() {
 
   cart = {};
   customerLocation = null;
+  selectedDelivery = 'delivery';
   saveCart();
   renderCartUI();
   closeOverlay('checkoutOverlay');
@@ -481,12 +521,11 @@ function bindGlobalEvents() {
     ov.addEventListener('click', (e) => { if (e.target === ov) ov.classList.add('hidden'); });
   });
 
-  document.querySelectorAll('.pay-option').forEach((opt) => {
+  document.querySelectorAll('#deliveryOptions .pay-option').forEach((opt) => {
     opt.addEventListener('click', () => {
-      document.querySelectorAll('.pay-option').forEach((o) => o.classList.remove('selected'));
-      opt.classList.add('selected');
-      selectedPayment = opt.dataset.pay;
-      document.getElementById('upiBox').style.display = selectedPayment === 'UPI' ? 'block' : 'none';
+      if (opt.classList.contains('disabled')) return;
+      selectedDelivery = opt.dataset.delivery;
+      updateDeliveryOptions();
     });
   });
 
