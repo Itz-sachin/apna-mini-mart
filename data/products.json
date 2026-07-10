@@ -1,0 +1,381 @@
+[
+  {
+    "id": "p001",
+    "name": "Toor Dal",
+    "category": "Grocery",
+    "price": 145,
+    "unit": "1 kg",
+    "image": "images/grocery.png",
+    "variants": [
+      "500 g",
+      "1 kg",
+      "2 kg"
+    ],
+    "stock": "in_stock",
+    "description": "Premium quality toor dal, sourced fresh."
+  },
+  {
+    "id": "p002",
+    "name": "Basmati Rice",
+    "category": "Grocery",
+    "price": 90,
+    "unit": "1 kg",
+    "image": "images/grocery.png",
+    "variants": [
+      "1 kg",
+      "5 kg"
+    ],
+    "stock": "in_stock",
+    "description": "Aromatic long-grain basmati rice."
+  },
+  {
+    "id": "p003",
+    "name": "Wheat Atta",
+    "category": "Grocery",
+    "price": 55,
+    "unit": "1 kg",
+    "image": "images/grocery.png",
+    "variants": [
+      "1 kg",
+      "5 kg",
+      "10 kg"
+    ],
+    "stock": "in_stock",
+    "description": "Whole wheat flour, chakki-fresh."
+  },
+  {
+    "id": "p004",
+    "name": "Sunflower Oil",
+    "category": "Grocery",
+    "price": 130,
+    "unit": "1 L",
+    "image": "images/grocery.png",
+    "variants": [
+      "500 ml",
+      "1 L"
+    ],
+    "stock": "low_stock",
+    "description": "Refined sunflower cooking oil."
+  },
+  {
+    "id": "p005",
+    "name": "Sugar",
+    "category": "Grocery",
+    "price": 45,
+    "unit": "1 kg",
+    "image": "images/grocery.png",
+    "variants": [
+      "1 kg"
+    ],
+    "stock": "in_stock",
+    "description": "Fine crystal white sugar."
+  },
+  {
+    "id": "p101",
+    "name": "Toned Milk",
+    "category": "Dairy",
+    "price": 28,
+    "unit": "500 ml",
+    "image": "images/dairy.png",
+    "variants": [
+      "500 ml",
+      "1 L"
+    ],
+    "stock": "in_stock",
+    "description": "Fresh toned milk, delivered daily."
+  },
+  {
+    "id": "p102",
+    "name": "Curd",
+    "category": "Dairy",
+    "price": 35,
+    "unit": "400 g",
+    "image": "images/dairy.png",
+    "variants": [
+      "200 g",
+      "400 g"
+    ],
+    "stock": "in_stock",
+    "description": "Thick and creamy fresh curd."
+  },
+  {
+    "id": "p103",
+    "name": "Paneer",
+    "category": "Dairy",
+    "price": 90,
+    "unit": "200 g",
+    "image": "images/dairy.png",
+    "variants": [
+      "200 g",
+      "500 g"
+    ],
+    "stock": "in_stock",
+    "description": "Soft fresh paneer."
+  },
+  {
+    "id": "p104",
+    "name": "Butter",
+    "category": "Dairy",
+    "price": 55,
+    "unit": "100 g",
+    "image": "images/dairy.png",
+    "variants": [
+      "100 g",
+      "500 g"
+    ],
+    "stock": "out_of_stock",
+    "description": "Creamy table butter."
+  },
+  {
+    "id": "p201",
+    "name": "Namkeen Mix",
+    "category": "Snacks",
+    "price": 40,
+    "unit": "200 g",
+    "image": "images/snacks.png",
+    "variants": [
+      "200 g",
+      "500 g"
+    ],
+    "stock": "in_stock",
+    "description": "Crunchy spiced namkeen mix."
+  },
+  {
+    "id": "p202",
+    "name": "Potato Chips",
+    "category": "Snacks",
+    "price": 20,
+    "unit": "52 g",
+    "image": "images/snacks.png",
+    "variants": [
+      "30 g",
+      "52 g",
+      "90 g"
+    ],
+    "stock": "in_stock",
+    "description": "Crispy salted potato chips."
+  },
+  {
+    "id": "p203",
+    "name": "Glucose Biscuits",
+    "category": "Snacks",
+    "price": 10,
+    "unit": "1 pack",
+    "image": "images/snacks.png",
+    "variants": [
+      "1 pack",
+      "Family pack"
+    ],
+    "stock": "in_stock",
+    "description": "Classic glucose biscuits."
+  },
+  {
+    "id": "p204",
+    "name": "Cream Biscuits",
+    "category": "Snacks",
+    "price": 25,
+    "unit": "1 pack",
+    "image": "images/snacks.png",
+    "variants": [
+      "1 pack"
+    ],
+    "stock": "in_stock",
+    "description": "Chocolate cream biscuits."
+  },
+  {
+    "id": "p301",
+    "name": "Cola Soft Drink",
+    "category": "Beverages",
+    "price": 40,
+    "unit": "750 ml",
+    "image": "images/beverages.png",
+    "variants": [
+      "250 ml",
+      "750 ml",
+      "1.25 L"
+    ],
+    "stock": "in_stock",
+    "description": "Chilled cola soft drink."
+  },
+  {
+    "id": "p302",
+    "name": "Packaged Drinking Water",
+    "category": "Beverages",
+    "price": 20,
+    "unit": "1 L",
+    "image": "images/beverages.png",
+    "variants": [
+      "500 ml",
+      "1 L",
+      "2 L"
+    ],
+    "stock": "in_stock",
+    "description": "Clean packaged drinking water."
+  },
+  {
+    "id": "p303",
+    "name": "Mango Juice",
+    "category": "Beverages",
+    "price": 30,
+    "unit": "200 ml",
+    "image": "images/beverages.png",
+    "variants": [
+      "200 ml",
+      "1 L"
+    ],
+    "stock": "in_stock",
+    "description": "Refreshing mango fruit drink."
+  },
+  {
+    "id": "p401",
+    "name": "Frozen Paratha",
+    "category": "Frozen",
+    "price": 60,
+    "unit": "5 pcs",
+    "image": "images/frozen.png",
+    "variants": [
+      "5 pcs",
+      "10 pcs"
+    ],
+    "stock": "in_stock",
+    "description": "Ready-to-cook frozen parathas."
+  },
+  {
+    "id": "p402",
+    "name": "Veg Nuggets",
+    "category": "Frozen",
+    "price": 90,
+    "unit": "425 g",
+    "image": "images/frozen.png",
+    "variants": [
+      "425 g"
+    ],
+    "stock": "in_stock",
+    "description": "Crispy vegetable nuggets."
+  },
+  {
+    "id": "p403",
+    "name": "Ice Cream Tub",
+    "category": "Frozen",
+    "price": 120,
+    "unit": "700 ml",
+    "image": "images/frozen.png",
+    "variants": [
+      "700 ml"
+    ],
+    "stock": "low_stock",
+    "description": "Vanilla ice cream tub."
+  },
+  {
+    "id": "p501",
+    "name": "Bathing Soap",
+    "category": "Personal Care",
+    "price": 35,
+    "unit": "1 bar",
+    "image": "images/personal_care.png",
+    "variants": [
+      "1 bar",
+      "Pack of 4"
+    ],
+    "stock": "in_stock",
+    "description": "Moisturizing bathing soap."
+  },
+  {
+    "id": "p502",
+    "name": "Shampoo Sachet",
+    "category": "Personal Care",
+    "price": 2,
+    "unit": "1 sachet",
+    "image": "images/personal_care.png",
+    "variants": [
+      "1 sachet",
+      "Strip of 8"
+    ],
+    "stock": "in_stock",
+    "description": "Small sachet shampoo pack."
+  },
+  {
+    "id": "p503",
+    "name": "Toothpaste",
+    "category": "Personal Care",
+    "price": 45,
+    "unit": "100 g",
+    "image": "images/personal_care.png",
+    "variants": [
+      "50 g",
+      "100 g"
+    ],
+    "stock": "in_stock",
+    "description": "Cavity protection toothpaste."
+  },
+  {
+    "id": "p504",
+    "name": "Hair Oil",
+    "category": "Personal Care",
+    "price": 60,
+    "unit": "200 ml",
+    "image": "images/personal_care.png",
+    "variants": [
+      "100 ml",
+      "200 ml"
+    ],
+    "stock": "in_stock",
+    "description": "Nourishing hair oil."
+  },
+  {
+    "id": "p601",
+    "name": "Detergent Powder",
+    "category": "Household",
+    "price": 55,
+    "unit": "1 kg",
+    "image": "images/household.png",
+    "variants": [
+      "500 g",
+      "1 kg"
+    ],
+    "stock": "in_stock",
+    "description": "Stain-removing detergent powder."
+  },
+  {
+    "id": "p602",
+    "name": "Dishwash Bar",
+    "category": "Household",
+    "price": 12,
+    "unit": "1 bar",
+    "image": "images/household.png",
+    "variants": [
+      "1 bar",
+      "Pack of 3"
+    ],
+    "stock": "in_stock",
+    "description": "Grease-cutting dishwash bar."
+  },
+  {
+    "id": "p603",
+    "name": "Floor Cleaner",
+    "category": "Household",
+    "price": 95,
+    "unit": "1 L",
+    "image": "images/household.png",
+    "variants": [
+      "500 ml",
+      "1 L"
+    ],
+    "stock": "in_stock",
+    "description": "Disinfectant floor cleaner."
+  },
+  {
+    "id": "p604",
+    "name": "Matchbox",
+    "category": "Household",
+    "price": 2,
+    "unit": "1 box",
+    "image": "images/household.png",
+    "variants": [
+      "1 box",
+      "Pack of 10"
+    ],
+    "stock": "in_stock",
+    "description": "Standard safety matchbox."
+  }
+]
