@@ -393,7 +393,7 @@ function renderUpiQrCode() {
 
   const payBtn = document.getElementById('upiPayBtn');
   payBtn.href = upiUrl;
-  document.getElementById('upiPayBtnLabel').textContent = `PAY ${CONFIG.CURRENCY}${amount} via UPI App`;
+  document.getElementById('upiPayBtnLabel').textContent = `Pay ${CONFIG.CURRENCY}${amount} via UPI App`;
 }
 
 function updateDeliveryOptions() {
