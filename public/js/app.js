@@ -375,12 +375,17 @@ let selectedDelivery = 'delivery';
 let deliveryWasForced = false; // true when pickup was auto-forced by low cart value, not chosen by the customer
 
 function openCheckout() {
-  document.getElementById('checkoutSummary').innerHTML = checkoutSummaryHTML();
-  updateDeliveryOptions();
-  renderUpiQrCode();
-  document.getElementById('screenshotConfirm').checked = false;
-  document.getElementById('placeOrderBtn').disabled = true;
+  // Open first, then fill in details defensively - a stale cached page missing
+  // one element (e.g. right after a deploy, before the cache re-syncs) must
+  // never silently prevent checkout from opening at all.
   openOverlay('checkoutOverlay');
+  try { document.getElementById('checkoutSummary').innerHTML = checkoutSummaryHTML(); } catch (e) { console.error('checkoutSummary failed:', e); }
+  try { updateDeliveryOptions(); } catch (e) { console.error('updateDeliveryOptions failed:', e); }
+  try { renderUpiQrCode(); } catch (e) { console.error('renderUpiQrCode failed:', e); }
+  try {
+    document.getElementById('screenshotConfirm').checked = false;
+    document.getElementById('placeOrderBtn').disabled = true;
+  } catch (e) { console.error('screenshot confirm reset failed:', e); }
 }
 
 function renderUpiQrCode() {
