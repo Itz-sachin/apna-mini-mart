@@ -385,11 +385,15 @@ function openCheckout() {
 
 function renderUpiQrCode() {
   const amount = cartTotal();
-  const upiUrl = `upi://pay?pa=${encodeURIComponent(CONFIG.UPI_ID)}&pn=${encodeURIComponent(CONFIG.STORE_NAME)}&am=${amount}&cu=INR&tn=${encodeURIComponent('Order at ' + CONFIG.STORE_NAME)}`;
+  // NOTE: "pa" (the payee VPA) must NOT be percent-encoded - many UPI apps'
+  // lightweight link parsers look for a literal "@" and fail ("payment
+  // failed"/"invalid payee") if it arrives as %40. Amount must carry 2
+  // decimal places or several banking apps reject the link outright.
+  const upiUrl = `upi://pay?pa=${CONFIG.UPI_ID}&pn=${encodeURIComponent(CONFIG.STORE_NAME)}&am=${amount.toFixed(2)}&cu=INR&tn=${encodeURIComponent('Order at ' + CONFIG.STORE_NAME)}&tr=${Date.now()}`;
 
   const payBtn = document.getElementById('upiPayBtn');
   payBtn.href = upiUrl;
-  payBtn.textContent = `📱 Pay ${CONFIG.CURRENCY}${amount} via UPI App`;
+  document.getElementById('upiPayBtnLabel').textContent = `PAY ${CONFIG.CURRENCY}${amount} via UPI App`;
 }
 
 function updateDeliveryOptions() {

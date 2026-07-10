@@ -207,6 +207,15 @@ button { font-family: inherit; cursor: pointer; }
 
 .upi-box { text-align: center; background: var(--surface); border-radius: 14px; padding: 16px; margin-top: 10px; }
 .upi-id { font-weight: 700; font-size: 15px; letter-spacing: 0.3px; }
+.upi-pay-btn {
+  display: flex; align-items: center; justify-content: center; gap: 10px;
+  text-decoration: none;
+}
+.upi-badge {
+  background: linear-gradient(135deg, #ED752E 50%, #097939 50%);
+  color: white; font-weight: 800; font-size: 12px; letter-spacing: 0.5px;
+  padding: 5px 9px; border-radius: 6px; flex-shrink: 0;
+}
 
 .screenshot-confirm {
   display: flex; align-items: flex-start; gap: 8px; margin: 14px 0;
